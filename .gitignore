@@ -6,4 +6,4 @@ temp/
 
 uploads/*
 !uploads/.gitkeep
-src/__tests__/coverage
+tests/coverage
