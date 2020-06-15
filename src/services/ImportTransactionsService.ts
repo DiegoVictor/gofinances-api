@@ -27,11 +27,6 @@ class ImportTransactionsService {
       transactions_filename,
     );
 
-    const transactions_file_exists = await fs.promises.stat(file_path);
-    if (!transactions_file_exists) {
-      throw new AppError('Oops! Something goes wrong during the upload!', 500);
-    }
-
     const parsed_transactions: TransactionProps[] = [];
     const categories: string[] = [];
 
