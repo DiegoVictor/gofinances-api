@@ -90,6 +90,20 @@ describe('Transaction', () => {
     );
   });
 
+  it('should not be able to create new transaction with wrong type', async () => {
+    const response = await request(app).post('/transactions').send({
+      title: 'March Salary',
+      type: '',
+      value: 4000,
+      category: 'Salary',
+    });
+
+    expect(response.body).toStrictEqual({
+      message: 'Invalid transaction type',
+      status: 'error',
+    });
+  });
+
   it('should create tags when inserting new transactions', async () => {
     const transactionsRepository = getRepository(Transaction);
     const categoriesRepository = getRepository(Category);
@@ -196,11 +210,79 @@ describe('Transaction', () => {
     expect(transaction).toBeFalsy();
   });
 
+  it('should not be able to delete a transaction that not exists', async () => {
+    const transactionsRepository = getRepository(Transaction);
+
+    const transaction = await transactionsRepository.create({
+      title: 'March Salary',
+      type: 'income',
+      value: 4000,
+    });
+    await transactionsRepository.save(transaction);
+    await transactionsRepository.delete(transaction.id);
+
+    const response = await request(app)
+      .delete(`/transactions/${transaction.id}`)
+      .expect(404);
+
+    expect(response.body).toStrictEqual({
+      status: 'error',
+      message: 'Transaction not found',
+    });
+  });
+
   it('should be able to import transactions', async () => {
     const transactionsRepository = getRepository(Transaction);
     const categoriesRepository = getRepository(Category);
 
     const importCSV = path.resolve(__dirname, 'import_template.csv');
+
+    await request(app).post('/transactions/import').attach('file', importCSV);
+
+    const transactions = await transactionsRepository.find();
+    const categories = await categoriesRepository.find();
+
+    expect(categories).toHaveLength(2);
+    expect(categories).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          title: 'Others',
+        }),
+        expect.objectContaining({
+          title: 'Food',
+        }),
+      ]),
+    );
+
+    expect(transactions).toHaveLength(3);
+    expect(transactions).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          title: 'Loan',
+          type: 'income',
+        }),
+        expect.objectContaining({
+          title: 'Website Hosting',
+          type: 'outcome',
+        }),
+        expect.objectContaining({
+          title: 'Ice cream',
+          type: 'outcome',
+        }),
+      ]),
+    );
+  });
+
+  it('should be able to import transactions', async () => {
+    const transactionsRepository = getRepository(Transaction);
+    const categoriesRepository = getRepository(Category);
+
+    const importCSV = path.resolve(__dirname, 'import_template.csv');
+
+    const category = categoriesRepository.create({
+      title: 'Food',
+    });
+    await categoriesRepository.save(category);
 
     await request(app).post('/transactions/import').attach('file', importCSV);
 
