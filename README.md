@@ -41,6 +41,7 @@ Responsible to store all application data. For the fastest setup is recommended 
 ```
 $ docker run --name gofinances-postgres -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres
 ```
+> Then create a database called `gofinances` and `tests` (case you would like to run the tests)
 
 #### Migrations
 Remember to run the database migrations:
@@ -107,6 +108,7 @@ Or:
 ```
 $ npm run test
 ```
+> For tests run create a database called `tests`.
 
 ## Coverage report
 You can see the coverage report inside `tests/coverage`. They are automatically created after the tests run.
