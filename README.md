@@ -35,17 +35,21 @@ $ npm install
 > Was installed and configured the [`eslint`](https://eslint.org/) and [`prettier`](https://prettier.io/) to keep the code clean and patterned.
 
 ## Configuring
-The application use only one databases: [Postgres](https://www.postgresql.org/).
+The application use only one database: [Postgres](https://www.postgresql.org/).
 
 ### Postgres
 Responsible to store all application data. For the fastest setup is recommended to use [docker](https://www.docker.com), you can create a postgres container like so:
 ```
 $ docker run --name gofinances-postgres -e POSTGRES_PASSWORD=docker -p 5432:5432 -d postgres
 ```
-> Then create a database called `gofinances` and `tests` (case you would like to run the tests)
+> Then create two databases: `gofinances` and `tests` (in case you would like to run the tests).
 
 #### Migrations
 Remember to run the database migrations:
+```
+$ yarn ts-node-dev ./node_modules/typeorm/cli.js migration:run
+```
+Or:
 ```
 $ yarn typeorm migration:run
 ```
