@@ -7,3 +7,4 @@ temp/
 uploads/*
 !uploads/.gitkeep
 tests/coverage
+.env
