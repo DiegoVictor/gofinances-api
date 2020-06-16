@@ -1,0 +1,13 @@
+language: node_js
+install:
+  - npm install
+  - npm install -g codecov
+node_js:
+  - node
+services:
+  - postgres
+before_script:
+  - psql -c 'create database tests;' -U postgres
+script:
+  - yarn test
+  - codecov
