@@ -25,8 +25,6 @@ class TransactionsRepository extends Repository<Transaction> {
             accumulator.outcome += value;
             accumulator.total -= value;
             break;
-
-          default:
         }
 
         return accumulator;
