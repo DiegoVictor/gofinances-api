@@ -102,7 +102,13 @@ Request body:
 
 * `POST /transactions/import`
 
-CSV file
+CSV file, example:
+```
+title, type, value, category
+Loan, income, 1500, Others
+Website Hosting, outcome, 50, Others
+Ice cream, outcome, 3, Food
+```
 
 # Running the tests
 [Jest](https://jestjs.io/) was the choice to test the app, to run:
