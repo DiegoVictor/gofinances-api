@@ -26,12 +26,14 @@ app.use((err: Error, request: Request, response: Response, _: NextFunction) => {
     return response.status(err.statusCode).json({
       status: 'error',
       message: err.message,
+      docs: process.env.DOCS_URL,
     });
   }
 
   return response.status(500).json({
     status: 'error',
     message: 'Internal server error',
+    docs: process.env.DOCS_URL,
   });
 });
 
