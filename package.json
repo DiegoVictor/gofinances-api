@@ -12,6 +12,7 @@
   },
   "dependencies": {
     "@types/csv-parse": "^1.2.2",
+    "celebrate": "^12.2.0",
     "cors": "^2.8.5",
     "csv-parse": "^4.8.8",
     "dotenv": "^8.2.0",
