@@ -1,5 +1,4 @@
 import { Router } from 'express';
-import { getCustomRepository } from 'typeorm';
 import multer from 'multer';
 
 import TransactionsRepository from '../repositories/TransactionsRepository';
