@@ -10,7 +10,7 @@ import { errors } from 'celebrate';
 import routes from './routes';
 import AppError from './errors/AppError';
 
-import createConnection from './database';
+import createConnection from './database/typeorm';
 
 createConnection();
 
