@@ -1,10 +1,17 @@
+interface InternalData {
+  [key: string]: number | string;
+}
+
 class AppError {
   public readonly message: string;
 
   public readonly statusCode: number;
 
-  constructor(message: string, statusCode = 400) {
+  public readonly data: InternalData;
+
+  constructor(message: string, data: InternalData, statusCode = 400) {
     this.message = message;
+    this.data = data;
     this.statusCode = statusCode;
   }
 }

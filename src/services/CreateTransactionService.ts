@@ -31,7 +31,8 @@ class CreateTransactionService {
     if (type === 'outcome' && value > total) {
       throw new AppError(
         "You don't have enough money to this transaction!",
-        400,
+        { code: 141 },
+        401,
       );
     }
 
