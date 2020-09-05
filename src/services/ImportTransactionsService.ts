@@ -3,11 +3,11 @@ import csv from 'csv-parse';
 import path from 'path';
 
 import { getCustomRepository, getRepository } from 'typeorm';
-import AppError from '../errors/AppError';
+
+import uploadConfiguration from '../config/upload';
 import Transaction from '../models/Transaction';
-import upload_configuration from '../config/upload';
-import TransactionsRepository from '../repositories/TransactionsRepository';
 import Category from '../models/Category';
+import TransactionsRepository from '../repositories/TransactionsRepository';
 
 interface Request {
   transactions_filename: string;
@@ -22,25 +22,25 @@ interface TransactionProps {
 
 class ImportTransactionsService {
   async execute({ transactions_filename }: Request): Promise<Transaction[]> {
-    const file_path = path.resolve(
-      upload_configuration.uploads_directory,
+    const filePath = path.resolve(
+      uploadConfiguration.uploads_directory,
       transactions_filename,
     );
 
-    const parsed_transactions: TransactionProps[] = [];
+    const parsedTransactions: TransactionProps[] = [];
     const categories: string[] = [];
 
-    const categories_repository = getRepository(Category);
-    const existing_categories = await categories_repository.find();
-    const categories_titles = existing_categories.map(({ title }) =>
+    const categoriesRepository = getRepository(Category);
+    const existingCategories = await categoriesRepository.find();
+    const categoriesTitles = existingCategories.map(({ title }) =>
       title.trim(),
     );
 
     await new Promise<TransactionProps[]>(resolve => {
-      fs.createReadStream(file_path)
+      fs.createReadStream(filePath)
         .pipe(csv({ trim: true, from_line: 2 }))
         .on('data', ([title, type, value, category]) => {
-          parsed_transactions.push({
+          parsedTransactions.push({
             title,
             type,
             value: Number(value),
@@ -48,7 +48,7 @@ class ImportTransactionsService {
           });
 
           if (
-            !categories_titles.includes(category) &&
+            !categoriesTitles.includes(category) &&
             !categories.includes(category)
           ) {
             categories.push(category);
@@ -57,24 +57,24 @@ class ImportTransactionsService {
         .on('end', resolve);
     });
 
-    const saved_categories = categories_repository.create(
+    const savedCategories = categoriesRepository.create(
       categories.map(title => ({ title })),
     );
-    await categories_repository.save(saved_categories);
+    await categoriesRepository.save(savedCategories);
 
-    const transactions_repository = getCustomRepository(TransactionsRepository);
-    const transactions = transactions_repository.create(
-      parsed_transactions.map(transaction => ({
+    const transactionsRepository = getCustomRepository(TransactionsRepository);
+    const transactions = transactionsRepository.create(
+      parsedTransactions.map(transaction => ({
         title: transaction.title,
         type: transaction.type,
         value: transaction.value,
-        category: [...saved_categories, ...existing_categories].find(
+        category: [...savedCategories, ...existingCategories].find(
           ({ title }) => title === transaction.category,
         ),
       })),
     );
 
-    await transactions_repository.save(transactions);
+    await transactionsRepository.save(transactions);
 
     return transactions;
   }
