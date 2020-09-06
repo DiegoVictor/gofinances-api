@@ -19,14 +19,10 @@ class CreateTransactionService {
     type,
     category,
   }: Request): Promise<Transaction> {
-    if (!['income', 'outcome'].includes(type)) {
-      throw new AppError('Invalid transaction type');
-    }
+    const transactionsRepository = getCustomRepository(TransactionsRepository);
+    const categoriesRepository = getRepository(Category);
 
-    const transactions_repository = getCustomRepository(TransactionsRepository);
-    const categories_repository = getRepository(Category);
-
-    const { total } = await transactions_repository.getBalance();
+    const { total } = await transactionsRepository.getBalance();
 
     if (type === 'outcome' && value > total) {
       throw new AppError(
