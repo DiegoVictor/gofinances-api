@@ -36,28 +36,28 @@ class CreateTransactionService {
       );
     }
 
-    let category_id;
-    const exists_category = await categories_repository.findOne({
+    let categoryId;
+    const existsCategory = await categoriesRepository.findOne({
       where: { title: category.trim() },
     });
 
-    if (!exists_category) {
-      const new_category = categories_repository.create({
+    if (!existsCategory) {
+      const newCategory = categoriesRepository.create({
         title: category.trim(),
       });
-      await categories_repository.save(new_category);
-      category_id = new_category.id;
+      await categoriesRepository.save(newCategory);
+      categoryId = newCategory.id;
     } else {
-      category_id = exists_category.id;
+      categoryId = existsCategory.id;
     }
 
-    const transaction = transactions_repository.create({
+    const transaction = transactionsRepository.create({
       title,
       value,
       type,
-      category_id,
+      category_id: categoryId,
     });
-    await transactions_repository.save(transaction);
+    await transactionsRepository.save(transaction);
 
     return transaction;
   }
