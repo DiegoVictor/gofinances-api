@@ -21,7 +21,9 @@ module.exports = {
   collectCoverageFrom: [
     'src/errors/*.ts',
     'src/repositories/*.ts',
-    'src/routes/*.ts',
+    'src/controllers/*.ts',
+    'src/helpers/*.ts',
+    'src/middlewares/*.ts',
     'src/services/*.ts',
   ],
 
