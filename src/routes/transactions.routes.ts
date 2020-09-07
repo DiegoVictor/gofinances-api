@@ -1,59 +1,26 @@
 import { Router } from 'express';
 import multer from 'multer';
 
-import TransactionsRepository from '../repositories/TransactionsRepository';
-import CreateTransactionService from '../services/CreateTransactionService';
-import DeleteTransactionService from '../services/DeleteTransactionService';
-import ImportTransactionsService from '../services/ImportTransactionsService';
-
-import upload_configuration from '../config/upload';
+import uploadConfiguration from '../config/upload';
+import TransactionsController from '../controllers/TransactionsController';
+import UploadTransactionsController from '../controllers/UploadTransactionsController';
+import idValidator from '../validators/idValidator';
+import transactionValidator from '../validators/transactionValidator';
 
 const transactionsRouter = Router();
-const upload = multer(upload_configuration);
+const upload = multer(uploadConfiguration);
 
-transactionsRouter.get('/', async (_, response) => {
-  const transactions_repository = getCustomRepository(TransactionsRepository);
+const transactionsContoller = new TransactionsController();
+const uploadTransactionsController = new UploadTransactionsController();
 
-  const transactions = await transactions_repository.find();
-  const balance = await transactions_repository.getBalance();
-
-  return response.json({ transactions, balance });
-});
-
-transactionsRouter.post('/', async (request, response) => {
-  const { title, value, type, category } = request.body;
-
-  const create_transaction = new CreateTransactionService();
-  const transaction = await create_transaction.execute({
-    title,
-    value,
-    type,
-    category,
-  });
-
-  return response.json(transaction);
-});
-
-transactionsRouter.delete('/:id', async (request, response) => {
-  const { id } = request.params;
-
-  const delete_transaction = new DeleteTransactionService();
-  await delete_transaction.execute({ id });
-
-  return response.sendStatus(204);
-});
+transactionsRouter.get('/', transactionsContoller.index);
+transactionsRouter.post('/', transactionValidator, transactionsContoller.store);
+transactionsRouter.delete('/:id', idValidator, transactionsContoller.delete);
 
 transactionsRouter.post(
   '/import',
   upload.single('file'),
-  async (request, response) => {
-    const import_transactions = new ImportTransactionsService();
-    const transactions = await import_transactions.execute({
-      transactions_filename: request.file.filename,
-    });
-
-    return response.json(transactions);
-  },
+  uploadTransactionsController.store,
 );
 
 export default transactionsRouter;
