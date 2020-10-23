@@ -15,11 +15,6 @@ interface TransactionItem {
   category: string;
 }
 
-jest.mock('../../src/config/security', () => ({
-  duration: 1,
-  points: 20,
-}));
-
 describe('Transaction', () => {
   let connection: Connection;
 
