@@ -100,6 +100,7 @@ Instead of only throw a simple message and HTTP Status Code this API return frie
 ### Errors Reference
 |code|message|description
 |---|---|---
+|140|Missing file|Was not provided a transaction file.
 |141|You don't have enough money to this transaction!|The said amount is greater than the available.
 |144|Transaction not found|The `id` sent not references an existing transaction in the database.
 
