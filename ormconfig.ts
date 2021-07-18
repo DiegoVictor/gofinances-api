@@ -7,11 +7,11 @@ module.exports = {
   password: process.env.POSTGRES_PASSWORD,
   database:
     process.env.NODE_ENV !== 'test'
-      ? 'tests'
-      : `${process.env.POSTGRES_DATABASE}`,
-  entities: ['./src/models/*.ts'],
-  migrations: ['./src/database/migrations/*.ts'],
+      ? `${process.env.POSTGRES_DATABASE}`
+      : 'tests',
+  entities: ['src/models/*.ts'],
+  migrations: ['src/database/migrations/*.ts'],
   cli: {
-    migrationsDir: './src/database/migrations',
+    migrationsDir: 'src/database/migrations',
   },
 };
