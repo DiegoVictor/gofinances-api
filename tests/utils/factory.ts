@@ -7,7 +7,7 @@ factory.define(
   {
     title: faker.name.title,
     type: () => faker.random.arrayElement(['income', 'outcome']),
-    value: faker.random.number,
+    value: faker.datatype.number,
     category: faker.finance.transactionType,
   },
 );
