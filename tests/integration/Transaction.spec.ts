@@ -74,9 +74,12 @@ describe('Transaction', () => {
   it('should be able to create new transaction', async () => {
     const transactionsRepository = getRepository(Transaction);
     const categoriesRepository = getRepository(Category);
-    const { title, type, value, category: categoryTitle } = await factory.attrs<
-      TransactionItem
-    >('Transaction', { type: 'income' });
+    const {
+      title,
+      type,
+      value,
+      category: categoryTitle,
+    } = await factory.attrs<TransactionItem>('Transaction', { type: 'income' });
 
     const response = await request(app)
       .post('/v1/transactions')
@@ -106,9 +109,12 @@ describe('Transaction', () => {
   it('should create tags when inserting new transactions', async () => {
     const transactionsRepository = getRepository(Transaction);
     const categoriesRepository = getRepository(Category);
-    const { title, type, value, category: categoryTitle } = await factory.attrs<
-      TransactionItem
-    >('Transaction', { type: 'income' });
+    const {
+      title,
+      type,
+      value,
+      category: categoryTitle,
+    } = await factory.attrs<TransactionItem>('Transaction', { type: 'income' });
 
     const response = await request(app).post('/v1/transactions').send({
       title,
@@ -144,9 +150,8 @@ describe('Transaction', () => {
   it('should not create tags when they already exists', async () => {
     const transactionsRepository = getRepository(Transaction);
     const categoriesRepository = getRepository(Category);
-    const { title, type, value, category } = await factory.attrs<
-      TransactionItem
-    >('Transaction', { type: 'income' });
+    const { title, type, value, category } =
+      await factory.attrs<TransactionItem>('Transaction', { type: 'income' });
 
     const { identifiers } = await categoriesRepository.insert({
       title: category,
@@ -175,13 +180,11 @@ describe('Transaction', () => {
   });
 
   it('should not be able to create outcome transaction without a valid balance', async () => {
-    const [
-      { title, type, value, category },
-      transaction,
-    ] = await factory.attrsMany<TransactionItem>('Transaction', 2, [
-      { type: 'income' },
-      { type: 'outcome' },
-    ]);
+    const [{ title, type, value, category }, transaction] =
+      await factory.attrsMany<TransactionItem>('Transaction', 2, [
+        { type: 'income' },
+        { type: 'outcome' },
+      ]);
 
     await request(app)
       .post('/v1/transactions')
@@ -352,5 +355,19 @@ describe('Transaction', () => {
         }),
       ]),
     );
+  });
+
+  it('should not be able to import transactions without send file', async () => {
+    const response = await request(app)
+      .post('/v1/transactions/import')
+      .expect(400)
+      .send();
+
+    expect(response.body).toStrictEqual({
+      status: 'error',
+      message: 'Missing file',
+      code: 140,
+      docs: process.env.DOCS_URL,
+    });
   });
 });
