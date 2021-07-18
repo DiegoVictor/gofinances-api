@@ -75,7 +75,6 @@ In this file you may configure your Postgres database connection, the environmen
 |POSTGRES_PASSWORD|Postgres password.| -
 |POSTGRES_DATABASE|Application's database name.| gofinances
 |DOCS_URL|An url to docs where users can find more information about the app's internal code errors.|`https://github.com/DiegoVictor/gofinances-api#errors-reference`
-> For Windows users using Docker Toolbox maybe be necessary in your `.env` file set the host of the Postgres to `192.168.99.100` (docker machine IP) instead of `localhost` or `127.0.0.1`.
 
 # Usage
 To start up the app run:
