@@ -8,3 +8,4 @@ uploads/*
 !uploads/.gitkeep
 tests/coverage
 .env
+dist
