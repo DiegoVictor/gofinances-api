@@ -1,9 +1,10 @@
 import { Request, Response } from 'express';
+import AppError from '../errors/AppError';
 
 import ImportTransactionsService from '../services/ImportTransactionsService';
 
 interface CustomRequest {
-  file: {
+  file?: {
     filename: string;
   };
 }
@@ -14,10 +15,15 @@ export default class UploadTransactionsController {
     response: Response,
   ): Promise<Response> {
     const importTransactions = new ImportTransactionsService();
-    const transactions = await importTransactions.execute({
-      transactions_filename: request.file.filename,
-    });
 
-    return response.json(transactions);
+    if (request.file) {
+      const transactions = await importTransactions.execute({
+        transactions_filename: request.file.filename,
+      });
+
+      return response.json(transactions);
+    }
+
+    throw new AppError('Missing file', { code: 140 });
   }
 }
