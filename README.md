@@ -1,5 +1,6 @@
 # [API] GoFinances
 [![Travis (.com)](https://img.shields.io/travis/DiegoVictor/gofinances-api?logo=travis&style=flat-square)](https://travis-ci.com/DiegoVictor/gofinances-api.svg?branch=master)
+[![typescript](https://img.shields.io/badge/typescript-4.3.5-3178c6?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 [![eslint](https://img.shields.io/badge/eslint-7.31.0-4b32c3?style=flat-square&logo=eslint)](https://eslint.org/)
 [![airbnb-style](https://flat.badgen.net/badge/style-guide/airbnb/ff5a5f?icon=airbnb)](https://github.com/airbnb/javascript)
 [![jest](https://img.shields.io/badge/jest-27.0.6-brightgreen?style=flat-square&logo=jest)](https://jestjs.io/)
