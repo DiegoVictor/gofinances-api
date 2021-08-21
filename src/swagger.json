@@ -14,6 +14,82 @@
     }
   ],
   "paths": {
+    "/transactions": {
+      "get": {
+        "tags": ["transactions"],
+        "responses": {
+          "200": {
+            "description": "Return transactions and balance",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "balances": {
+                      "type": "object",
+                      "title": "Balance",
+                      "properties": {
+                        "income": {
+                          "type": "number"
+                        },
+                        "outcome": {
+                          "type": "number"
+                        },
+                        "total": {
+                          "type": "number"
+                        }
+                      }
+                    },
+                    "transactions": {
+                      "type": "array",
+                      "items": {
+                        "title": "Transaction",
+                        "allOf": [
+                          {
+                            "$ref": "#/components/schemas/Transaction"
+                          },
+                          {
+                            "properties": {
+                              "category": {
+                                "$ref": "#/components/schemas/Category"
+                              }
+                            }
+                          }
+                        ]
+                      }
+                    }
+                  }
+                },
+                "example": {
+                  "transactions": [
+                    {
+                      "id": "90b2ebc6-3085-451c-9cec-e288d0f83346",
+                      "title": "Loan",
+                      "type": "income",
+                      "value": 1500,
+                      "category_id": "e5ebd4bd-0ad2-4b7f-abd3-0e886cbd8c40",
+                      "created_at": "2021-08-16T01:06:31.993Z",
+                      "updated_at": "2021-08-16T01:06:31.993Z",
+                      "category": {
+                        "id": "e5ebd4bd-0ad2-4b7f-abd3-0e886cbd8c40",
+                        "title": "Others",
+                        "created_at": "2021-08-16T01:06:31.974Z",
+                        "updated_at": "2021-08-16T01:06:31.974Z"
+                      }
+                    }
+                  ],
+                  "balance": {
+                    "income": 1500,
+                    "outcome": 0,
+                    "total": 1500
+                  }
+                }
+              }
+            }
+          }
+        }
+      },
+    },
   },
   "components": {
     "schemas": {
@@ -59,5 +135,6 @@
           }
         }
       },
+    }
   }
 }
