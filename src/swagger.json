@@ -15,4 +15,33 @@
   ],
   "paths": {
   },
+  "components": {
+    "schemas": {
+      "Transaction": {
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "title": {
+            "type": "string"
+          },
+          "type": {
+            "type": "string",
+            "enum": ["income", "outcome"]
+          },
+          "value": {
+            "type": "number"
+          },
+          "category_id": {
+            "type": "string"
+          },
+          "created_at": {
+            "type": "string"
+          },
+          "updated_at": {
+            "type": "string"
+          }
+        }
+      },
+  }
 }
