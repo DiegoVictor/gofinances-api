@@ -21,7 +21,7 @@ export default class UploadTransactionsController {
         transactions_filename: request.file.filename,
       });
 
-      return response.json(transactions);
+      return response.status(201).json(transactions);
     }
 
     throw new AppError('Missing file', { code: 140 });

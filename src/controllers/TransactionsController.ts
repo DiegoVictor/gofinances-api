@@ -30,7 +30,7 @@ export default class TransactionsController {
       category,
     });
 
-    return response.json(transaction);
+    return response.status(201).json(transaction);
   }
 
   async delete(request: Request, response: Response): Promise<Response> {
