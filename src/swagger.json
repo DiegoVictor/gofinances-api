@@ -89,6 +89,83 @@
           }
         }
       },
+      "post": {
+        "tags": ["transactions"],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "title": "Transaction",
+                "required": [
+                  "title",
+                  "type",
+                  "value",
+                  "category"
+                ],
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "type": {
+                    "type": "string"
+                  },
+                  "value": {
+                    "type": "number"
+                  },
+                  "category": {
+                    "type": "string"
+                  }
+                }
+              },
+              "example": {
+                "title": "Rocketseat Course",
+                "value": 100,
+                "type": "outcome",
+                "category": "Study"
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Create a new transaction",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Transaction"
+                },
+                "example": {
+                  "title": "Rocketseat Course",
+                  "type": "outcome",
+                  "value": 100,
+                  "category_id": "03641cb2-49b2-4270-9485-702548045136",
+                  "id": "a5ecfbfe-d415-44e7-92db-24f45f197ec4",
+                  "created_at": "2021-08-16T01:10:16.341Z",
+                  "updated_at": "2021-08-16T01:10:16.341Z"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "You don't have enough money to this transaction!",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "status": "error",
+                  "message": "You don't have enough money to this transaction!",
+                  "code": 141,
+                  "docs": "https://github.com/DiegoVictor/gofinances-api#errors-reference"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     },
   },
   "components": {
