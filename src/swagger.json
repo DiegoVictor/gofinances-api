@@ -166,6 +166,41 @@
         }
       }
     },
+    "/transactions/{id}": {
+      "delete": {
+        "tags": ["transactions"],
+        "parameters": [
+          {
+            "in": "path",
+            "name": "id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "204": {
+            "description": "Remove a transaction"
+          },
+          "404": {
+            "description": "Transaction not found",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "status": "error",
+                  "message": "Transaction not found",
+                  "code": 144,
+                  "docs": "https://github.com/DiegoVictor/gofinances-api#errors-reference"
+                }
+              }
+            }
+          }
+        }
+      }
     },
   },
   "components": {
