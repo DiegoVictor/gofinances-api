@@ -202,6 +202,86 @@
         }
       }
     },
+    "/transactions/import": {
+      "post": {
+        "tags": ["transactions"],
+        "requestBody": {
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "file": {
+                    "type": "string",
+                    "format": "binary"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Import transactions from file",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "title": "Transaction",
+                    "allOf": [
+                      {
+                        "$ref": "#/components/schemas/Transaction"
+                      },
+                      {
+                        "properties": {
+                          "category": {
+                            "$ref": "#/components/schemas/Category"
+                          }
+                        }
+                      }
+                    ]
+                  }
+                },
+                "example": [
+                  {
+                    "title": "Loan",
+                    "type": "income",
+                    "value": 1500,
+                    "category_id": "e5ebd4bd-0ad2-4b7f-abd3-0e886cbd8c40",
+                    "category": {
+                      "id": "e5ebd4bd-0ad2-4b7f-abd3-0e886cbd8c40",
+                      "title": "Others",
+                      "created_at": "2021-08-16T01:06:31.974Z",
+                      "updated_at": "2021-08-16T01:06:31.974Z"
+                    },
+                    "id": "f9219e75-54fb-467e-b142-5bf7604e7bc4",
+                    "created_at": "2021-08-16T01:35:23.282Z",
+                    "updated_at": "2021-08-16T01:35:23.282Z"
+                  }
+                ]
+              }
+            }
+          },
+          "400": {
+            "description": "Missing file",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Error"
+                },
+                "example": {
+                  "status": "error",
+                  "message": "Missing file",
+                  "code": 140,
+                  "docs": "https://github.com/DiegoVictor/gofinances-api#errors-reference"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
   },
   "components": {
     "schemas": {
