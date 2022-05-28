@@ -1,12 +1,12 @@
-import faker from 'faker';
+import { faker } from '@faker-js/faker';
 import factory from 'factory-girl';
 
 factory.define(
   'Transaction',
   {},
   {
-    title: faker.name.title,
-    type: () => faker.random.arrayElement(['income', 'outcome']),
+    title: faker.lorem.words,
+    type: () => faker.helpers.arrayElement(['income', 'outcome']),
     value: faker.datatype.number,
     category: faker.finance.transactionType,
   },
