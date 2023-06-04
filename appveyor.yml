@@ -11,13 +11,12 @@ environment:
 build: off
 services:
   - postgresql
-init:
+install:
   - cmd: |
       SET PGUSER=postgres
       SET PGPASSWORD=Password12!
       PATH=C:\Program Files\PostgreSQL\9.6\bin\;%PATH%
       createdb tests
-install:
   - cmd: npm ci
   - cmd: npm run typeorm migration:run
 test_script:
