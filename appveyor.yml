@@ -7,12 +7,14 @@ environment:
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: Password12!
   POSTGRES_DATABASE: gofinances
-  DOCS_URL: https://github.com/DiegoVictor/pipedeals#errors-reference
+  DOCS_URL: https://github.com/DiegoVictor/gofinances-api#errors-reference
+build: off
 services:
-  - postgresql13
+  - postgresql
 install:
   - sh: npm ci
 test_script:
+  - sh: sudo psql -U postgres -c 'create database gofinances;'
   - sh: npm run test
 on_success:
   - sh: |
