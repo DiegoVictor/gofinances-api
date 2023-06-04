@@ -14,7 +14,9 @@ services:
 install:
   - sh: npm ci
 test_script:
-  - sh: sudo psql -U postgres -c 'create database gofinances;'
+  - sh: |
+      SET PGPASSWORD=Password12!
+      sudo psql -U postgres -c 'create database gofinances;'
   - sh: npm run test
 on_success:
   - sh: |
