@@ -13,15 +13,17 @@ services:
 install:
   - ps: npm ci
 test_script:
-  - ps: >-
+  - cmd: |
       SET PGUSER=postgres
       SET PGPASSWORD=Password12!
       PATH=C:\Program Files\PostgreSQL\9.6\bin\;%PATH%
       createdb tests
-  - ps: npm run test
+  - cmd: npm run test
 on_success:
   - ps: >-
       $ProgressPreference = 'SilentlyContinue'
+
       Invoke-WebRequest -Uri https://uploader.codecov.io/latest/windows/codecov.exe -Outfile codecov.exe
+
       .\codecov.exe
 
