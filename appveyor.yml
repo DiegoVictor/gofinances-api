@@ -11,7 +11,7 @@ build: off
 services:
   - postgresql
 install:
-  - sh: npm ci
+  - cmd: npm ci
 test_script:
   - cmd: |
       SET PGUSER=postgres
