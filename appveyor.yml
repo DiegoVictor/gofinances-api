@@ -1,0 +1,22 @@
+version: 1.0.{build}
+image: Ubuntu
+environment:
+  APP_PORT: 3333
+  POSTGRES_HOST: 127.0.0.1
+  POSTGRES_PORT: 5432
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: Password12!
+  POSTGRES_DATABASE: gofinances
+  DOCS_URL: https://github.com/DiegoVictor/pipedeals#errors-reference
+services:
+  - postgresql13
+install:
+  - sh: npm ci
+test_script:
+  - sh: npm run test
+on_success:
+  - sh: |
+      curl -Os https://uploader.codecov.io/latest/linux/codecov
+
+      chmod +x codecov
+      ./codecov
