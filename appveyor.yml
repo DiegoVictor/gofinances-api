@@ -7,17 +7,20 @@ environment:
   POSTGRES_PASSWORD: Password12!
   POSTGRES_DATABASE: gofinances
   DOCS_URL: https://github.com/DiegoVictor/gofinances-api#errors-reference
+  NODE_ENV: test
 build: off
 services:
   - postgresql
-install:
-  - cmd: npm ci
-test_script:
+init:
   - cmd: |
       SET PGUSER=postgres
       SET PGPASSWORD=Password12!
       PATH=C:\Program Files\PostgreSQL\9.6\bin\;%PATH%
-      createdb gofinances
+      createdb tests
+install:
+  - cmd: npm ci
+  - cmd: npm run typeorm migration:run
+test_script:
   - cmd: npm run test
 on_success:
   - cmd: |
