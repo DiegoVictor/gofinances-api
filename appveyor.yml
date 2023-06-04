@@ -1,5 +1,4 @@
 version: 1.0.{build}
-image: Ubuntu
 environment:
   APP_PORT: 3333
   POSTGRES_HOST: 127.0.0.1
@@ -14,13 +13,15 @@ services:
 install:
   - sh: npm ci
 test_script:
-  - sh: |
-      PGPASSWORD=Password12!
-      sudo psql -U postgres -c 'create database gofinances;'
-  - sh: npm run test
+  - cmd: |
+      SET PGUSER=postgres
+      SET PGPASSWORD=Password12!
+      PATH=C:\Program Files\PostgreSQL\9.6\bin\;%PATH%
+      createdb gofinances
+  - cmd: npm run test
 on_success:
-  - sh: |
-      curl -Os https://uploader.codecov.io/latest/linux/codecov
+  - cmd: |
+      $ProgressPreference = 'SilentlyContinue'
+      Invoke-WebRequest -Uri https://uploader.codecov.io/latest/windows/codecov.exe -Outfile codecov.exe
+      .\codecov.exe
 
-      chmod +x codecov
-      ./codecov
