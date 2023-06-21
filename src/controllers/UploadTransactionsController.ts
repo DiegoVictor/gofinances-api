@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import AppError from '../errors/AppError';
 
+import AppError from '../errors/AppError';
 import ImportTransactionsService from '../services/ImportTransactionsService';
 
 interface CustomRequest {

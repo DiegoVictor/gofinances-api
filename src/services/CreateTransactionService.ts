@@ -37,14 +37,14 @@ class CreateTransactionService {
       where: { title: category.trim() },
     });
 
+    categoryId = existsCategory?.id;
     if (!existsCategory) {
       const newCategory = categoriesRepository.create({
         title: category.trim(),
       });
+
       await categoriesRepository.save(newCategory);
       categoryId = newCategory.id;
-    } else {
-      categoryId = existsCategory.id;
     }
 
     const transaction = transactionsRepository.create({
