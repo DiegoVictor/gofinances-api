@@ -7,7 +7,11 @@ factory.define(
   {
     title: faker.lorem.words,
     type: () => faker.helpers.arrayElement(['income', 'outcome']),
-    value: faker.datatype.number,
+    value: () =>
+      faker.number.int({
+        min: 1,
+        max: 3000,
+      }),
     category: faker.finance.transactionType,
   },
 );

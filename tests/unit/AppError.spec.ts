@@ -6,7 +6,7 @@ describe('AppError', () => {
   it('should be able to return an error with default status code', () => {
     const message = faker.lorem.sentence();
     const data = {
-      code: faker.datatype.number(),
+      code: faker.number.int(),
     };
 
     const error = new AppError(message, data);
@@ -20,9 +20,9 @@ describe('AppError', () => {
 
   it('should be able to return an error with custom status code', () => {
     const message = faker.lorem.sentence();
-    const statusCode = faker.datatype.number();
+    const statusCode = faker.number.int();
     const data = {
-      code: faker.datatype.number(),
+      code: faker.number.int(),
     };
 
     const error = new AppError(message, data, statusCode);
