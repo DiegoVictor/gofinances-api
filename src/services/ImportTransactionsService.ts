@@ -1,5 +1,5 @@
 import fs from 'fs';
-import csv from 'csv-parse';
+import { parse } from 'csv-parse';
 import path from 'path';
 import { getCustomRepository, getRepository } from 'typeorm';
 
@@ -37,7 +37,7 @@ class ImportTransactionsService {
 
     await new Promise<TransactionProps[]>(resolve => {
       fs.createReadStream(filePath)
-        .pipe(csv({ trim: true, from_line: 2 }))
+        .pipe(parse({ trim: true, from_line: 2 }))
         .on('data', ([title, type, value, category]) => {
           parsedTransactions.push({
             title,
