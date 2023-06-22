@@ -8,16 +8,16 @@ import Transaction from '../../src/models/Transaction';
 import Category from '../../src/models/Category';
 import factory from '../utils/factory';
 
-interface TransactionItem {
+interface ITransaction {
   title: string;
   type: 'income' | 'outcome';
   value: number;
   category: string;
 }
 
-describe('Transaction', () => {
-  let connection: Connection;
+let connection: Connection;
 
+describe('Transaction', () => {
   beforeAll(async () => {
     connection = await createConnection('test-connection');
 
@@ -41,7 +41,7 @@ describe('Transaction', () => {
   });
 
   it('should be able to list transactions', async () => {
-    const transactions = await factory.attrsMany<TransactionItem>(
+    const transactions = await factory.attrsMany<ITransaction>(
       'Transaction',
       3,
       [
@@ -51,7 +51,7 @@ describe('Transaction', () => {
       ],
     );
 
-    async function saveTransaction(array: TransactionItem[]): Promise<void> {
+    async function saveTransaction(array: ITransaction[]): Promise<void> {
       const item = array.shift();
       await request(app).post('/v1/transactions').send(item);
 
@@ -74,12 +74,13 @@ describe('Transaction', () => {
   it('should be able to create new transaction', async () => {
     const transactionsRepository = getRepository(Transaction);
     const categoriesRepository = getRepository(Category);
+
     const {
       title,
       type,
       value,
       category: categoryTitle,
-    } = await factory.attrs<TransactionItem>('Transaction', { type: 'income' });
+    } = await factory.attrs<ITransaction>('Transaction', { type: 'income' });
 
     const response = await request(app)
       .post('/v1/transactions')
@@ -114,7 +115,7 @@ describe('Transaction', () => {
       type,
       value,
       category: categoryTitle,
-    } = await factory.attrs<TransactionItem>('Transaction', { type: 'income' });
+    } = await factory.attrs<ITransaction>('Transaction', { type: 'income' });
 
     const response = await request(app).post('/v1/transactions').send({
       title,
@@ -150,8 +151,10 @@ describe('Transaction', () => {
   it('should not create tags when they already exists', async () => {
     const transactionsRepository = getRepository(Transaction);
     const categoriesRepository = getRepository(Category);
-    const { title, type, value, category } =
-      await factory.attrs<TransactionItem>('Transaction', { type: 'income' });
+    const { title, type, value, category } = await factory.attrs<ITransaction>(
+      'Transaction',
+      { type: 'income' },
+    );
 
     const { identifiers } = await categoriesRepository.insert({
       title: category,
@@ -181,7 +184,7 @@ describe('Transaction', () => {
 
   it('should not be able to create outcome transaction without a valid balance', async () => {
     const [{ title, type, value, category }, transaction] =
-      await factory.attrsMany<TransactionItem>('Transaction', 2, [
+      await factory.attrsMany<ITransaction>('Transaction', 2, [
         { type: 'income' },
         { type: 'outcome' },
       ]);
@@ -208,7 +211,7 @@ describe('Transaction', () => {
 
   it('should be able to delete a transaction', async () => {
     const transactionsRepository = getRepository(Transaction);
-    const transaction = await factory.attrs<TransactionItem>('Transaction', {
+    const transaction = await factory.attrs<ITransaction>('Transaction', {
       type: 'income',
     });
 
@@ -227,7 +230,7 @@ describe('Transaction', () => {
 
   it('should not be able to delete a transaction that not exists', async () => {
     const transactionsRepository = getRepository(Transaction);
-    const { title, type, value } = await factory.attrs<TransactionItem>(
+    const { title, type, value } = await factory.attrs<ITransaction>(
       'Transaction',
       {
         type: 'income',
