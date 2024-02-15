@@ -21,7 +21,6 @@
     "multer": "^1.4.5-lts.1",
     "pg": "^8.11.0",
     "reflect-metadata": "^0.1.13",
-    "swagger-ui-express": "^4.6.3",
     "typeorm": "^0.2.24"
   },
   "devDependencies": {
