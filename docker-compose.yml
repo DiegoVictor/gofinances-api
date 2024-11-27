@@ -1,4 +1,4 @@
-version: "3.9"
+version: '3.9'
 services:
   pg:
     image: postgres
@@ -6,6 +6,7 @@ services:
     restart: unless-stopped
     environment:
       POSTGRES_PASSWORD: docker
+      POSTGRES_DB: gofinances
     ports:
       - 5432:5432
     volumes:
