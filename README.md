@@ -7,7 +7,7 @@
 [![coverage](https://img.shields.io/codecov/c/gh/DiegoVictor/gofinances-api?logo=codecov&style=flat-square)](https://codecov.io/gh/DiegoVictor/gofinances-api)
 [![MIT License](https://img.shields.io/badge/license-MIT-green?style=flat-square)](https://raw.githubusercontent.com/DiegoVictor/gofinances-api/main/LICENSE)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat-square)](http://makeapullrequest.com)<br>
-[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?uri=https%3A%2F%2Fraw.githubusercontent.com%2FDiegoVictor%2Fgofinances-api%2Fmain%2FInsomnia_2020-09-06.json&label=GoFinances)
+[![Run in Insomnia}](https://insomnia.rest/images/run.svg)](https://insomnia.rest/run/?uri=https%3A%2F%2Fraw.githubusercontent.com%2FDiegoVictor%2Fgofinances-api%2Fmain%2FInsomnia_2024-11-27.json&label=GoFinances)
 
 Responsible for provide data to the [`web`](https://github.com/DiegoVictor/gofinances-web) front-end. Allow users to register income and outcome transactions.
 
