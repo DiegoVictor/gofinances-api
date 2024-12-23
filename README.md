@@ -1,5 +1,6 @@
 # [API] GoFinances
 [![AppVeyor](https://img.shields.io/appveyor/build/diegovictor/gofinances-api?logo=appveyor&style=flat-square)](https://ci.appveyor.com/project/DiegoVictor/gofinances-api)
+[![postgres](https://img.shields.io/badge/postgres-8.11.0-326690?style=flat-square&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
 [![typescript](https://img.shields.io/badge/typescript-5.1.3-3178c6?style=flat-square&logo=typescript)](https://www.typescriptlang.org/)
 [![eslint](https://img.shields.io/badge/eslint-8.43.0-4b32c3?style=flat-square&logo=eslint)](https://eslint.org/)
 [![airbnb-style](https://flat.badgen.net/badge/style-guide/airbnb/ff5a5f?icon=airbnb)](https://github.com/airbnb/javascript)
